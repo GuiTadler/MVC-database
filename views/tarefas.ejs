@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lista de Tarefas</title>
+  <style>
+    /* styles.css */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+form {
+  margin-bottom: 10px;
+}
+
+input[type="text"] {
+  padding: 5px;
+}
+
+button {
+  padding: 5px 10px;
+  margin-left: 10px;
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+  </style>
+</head>
+
+<body>
+  <h1>Todo List</h1>
+
+  <form action="/tarefas" method="POST">
+    <input type="text" name="text" placeholder="Add a task" required>
+    <button type="submit">Add</button>
+  </form>
+
+  <ul>
+    <% tarefas.forEach((tarefa) => { %>
+      <li>
+        <form id="updateForm-<%= tarefa._id %>" action="/tarefas/<%= tarefa._id %>/update" method="POST">
+          <% if (!tarefa.text) { %>
+            <input id="textInput-<%= tarefa._id %>" type="text" name="text" required>
+            <button type="button" onclick="addNewValue('<%= tarefa._id %>')">Adicionar Valor</button>
+          <% } else { %>
+            <input id="textInput-<%= tarefa._id %>" type="text" name="text" value="<%= tarefa.text %>" required>
+            <button type="button" onclick="editValue('<%= tarefa._id %>')">Editar Valor</button>
+            <button id="saveButton-<%= tarefa._id %>" type="submit" style="display: none;">Salvar</button>
+          <% } %>
+        </form>
+        
+        <form id="deleteForm-<%= tarefa._id %>" action="/tarefas/<%= tarefa._id %>/delete" method="POST">
+          <input type="hidden" name="id" value="<%= tarefa._id %>">
+          <button type="button" onclick="deleteTarefa('<%= tarefa._id %>')">Delete</button>
+        </form>
+
+      </li>
+    <% }) %>
+  </ul>
+
+  <script>
+    function addNewValue(tarefaId) {
+      const textInput = document.getElementById(`textInput-${tarefaId}`);
+      textInput.value = '';
+      textInput.readOnly = false;
+
+      const saveButton = document.getElementById(`saveButton-${tarefaId}`);
+      saveButton.style.display = 'inline-block';
+      textInput.focus();
+    }
+
+    function editValue(tarefaId) {
+      const textInput = document.getElementById(`textInput-${tarefaId}`);
+      textInput.readOnly = false;
+      textInput.focus();
+
+      const saveButton = document.getElementById(`saveButton-${tarefaId}`);
+      saveButton.style.display = 'inline-block';
+    }
+
+    function deleteTarefa(tarefaId) {
+      const deleteForm = document.getElementById(`deleteForm-${tarefaId}`);
+      deleteForm.submit();
+    }
+  </script>
+</body>
+
+
+</html>
