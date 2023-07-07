@@ -44,7 +44,7 @@ li {
 <body>
   <h1>Todo List</h1>
 
-  <form action="/tarefas" method="POST">
+  <form action="/" method="POST">
     <input type="text" name="text" placeholder="Add a task" required>
     <button type="submit">Add</button>
   </form>
@@ -52,7 +52,7 @@ li {
   <ul>
     <% tarefas.forEach((tarefa) => { %>
       <li>
-        <form id="updateForm-<%= tarefa._id %>" action="/tarefas/<%= tarefa._id %>/update" method="POST">
+        <form id="updateForm-<%= tarefa._id %>" action="/<%= tarefa._id %>/update" method="POST">
           <% if (!tarefa.text) { %>
             <input id="textInput-<%= tarefa._id %>" type="text" name="text" required>
             <button type="button" onclick="addNewValue('<%= tarefa._id %>')">Adicionar Valor</button>
@@ -63,7 +63,7 @@ li {
           <% } %>
         </form>
         
-        <form id="deleteForm-<%= tarefa._id %>" action="/tarefas/<%= tarefa._id %>/delete" method="POST">
+        <form id="deleteForm-<%= tarefa._id %>" action="/<%= tarefa._id %>/delete" method="POST">
           <input type="hidden" name="id" value="<%= tarefa._id %>">
           <button type="button" onclick="deleteTarefa('<%= tarefa._id %>')">Delete</button>
         </form>
@@ -96,6 +96,7 @@ li {
       const deleteForm = document.getElementById(`deleteForm-${tarefaId}`);
       deleteForm.submit();
     }
+
   </script>
 </body>
 

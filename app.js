@@ -23,7 +23,7 @@ mongoose.connect(process.env.MONGO_DB,
 });
 
 // Porta de acesso
-const PORT = process.env.PORT || 5003
+const PORT = process.env.PORT || 5001
 
 app.listen(PORT, () => {
     console.log('Escutando na porta: ' + PORT )
@@ -52,7 +52,8 @@ app.use((req,res,next) => {
     next();
 });
 
-app.get('/tarefas', tarefa.getTarefas);
-app.post('/tarefas', tarefa.createTarefas);
-app.post('/tarefas/:id/update', tarefa.updateTarefas);
-app.post('/tarefas/:id/delete', tarefa.deleteTarefas);
+app.get('/', tarefa.getTarefas);
+app.post('/', tarefa.createTarefas);
+app.post('/:id/update', tarefa.updateTarefas);
+app.post('/:id/delete', tarefa.deleteTarefas);
+
