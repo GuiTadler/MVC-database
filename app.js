@@ -54,6 +54,5 @@ app.use((req,res,next) => {
 
 app.get('/tarefas', tarefa.getTarefas);
 app.post('/tarefas', tarefa.createTarefas);
-router.post('/tarefas/:id/addNewValue', tarefa.addNewValue);
-router.post('/tarefas/:id/editValue', tarefa.editValue);
-router.post('/tarefas/:id/deleteTarefa', tarefa.deleteTarefa);
+app.post('/tarefas/:id/update', tarefa.updateTarefas);
+app.post('/tarefas/:id/delete', tarefa.deleteTarefas);
